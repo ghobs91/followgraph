@@ -37,9 +37,6 @@ export default function Home() {
         <Header selected="home" />
         <Hero />
         <Content />
-        <FAQ />
-
-        <Footer />
       </div>
     </>
   )

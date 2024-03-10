@@ -5,3 +5,31 @@
 html {
   scroll-behavior: smooth;
 }
+
+.profile-card {
+  background-color: #242526;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #2f3031;
+}
+
+.follow-button {
+  padding: 8px 12px;
+  border-radius: 2.5em;
+  background-color: #6495ed;
+  border: 1px solid rgba(128, 128, 128, .2);
+}
+
+body {
+  background-color: #18191a;
+}
+
+section {
+  background-color: #18191a;
+}
+
+.dark-gray-bg {
+  background-color: #18191a;
+}

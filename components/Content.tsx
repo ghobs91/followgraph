@@ -1,5 +1,5 @@
 import { Spinner } from './Spinner'
-import React, { useState, memo, useRef } from 'react'
+import React, { useState, memo, useRef, useEffect } from 'react'
 import sanitizeHtml from 'sanitize-html'
 import debounce from 'debounce'
 
@@ -81,7 +81,7 @@ async function accountFollows(
     if (!page.map) {
       break
     }
-    page = page.map((entry: AccountDetails) => {
+    page = page.filter(entry => entry.acct.indexOf('@bird.makeup') === -1).map((entry: AccountDetails) => {
       if (entry.acct && !/@/.test(entry.acct)) {
         // make sure the domain is always there
         entry.acct = `${entry.acct}@${domain}`
@@ -199,6 +199,14 @@ export function Content({}) {
   ])
   const [errors, setErrors] = useState<Array<string>>([])
 
+  useEffect(()=>{
+    if (typeof window != "undefined") {
+      const queryParams = new URLSearchParams(window.location.search)
+      const handle = queryParams.get("handle")
+      search(handle);
+    }
+  }, [])
+
   async function search(handle: string) {
     if (!/@/.test(handle)) {
       return
@@ -217,7 +225,7 @@ export function Content({}) {
   }
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-800" id="searchForm">
+    <section className="dark-gray-bg" id="searchForm">
       <div className="px-4 py-8 mx-auto space-y-12 lg:space-y-20 lg:py-24 max-w-screen-xl">
         <form
           onSubmit={(e) => {
@@ -332,7 +340,7 @@ export function Content({}) {
           <Results follows={follows} domain={domain} />
         ) : null}
 
-        <ErrorLog errors={errors} />
+        {/* <ErrorLog errors={errors} /> */}
       </div>
     </section>
   )
@@ -360,7 +368,7 @@ const AccountDetails = memo(
     const [expandedFollowers, setExpandedFollowers] = useState(false)
 
     return (
-      <li className="px-4 py-3 pb-7 sm:px-0 sm:py-4">
+      <li className="profile-card">
         <div className="flex flex-col gap-4 sm:flex-row">
           <div className="flex-shrink-0 m-auto">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -410,7 +418,7 @@ const AccountDetails = memo(
             </small>
           </div>
           <div className="inline-flex m-auto text-base font-semibold text-gray-900 dark:text-white">
-            <a
+            {/* <a
               href={`https://${mainDomain}/@${acct.replace(
                 '@' + mainDomain,
                 ''
@@ -420,6 +428,14 @@ const AccountDetails = memo(
               rel="noreferrer"
             >
               Follow
+            </a> */}
+            <a
+              href={`https://agorasocial.app/#/https://${acct.split('@')[1]}/@${acct.split('@')[0]}`}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded follow-button"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Follow on Agora
             </a>
           </div>
         </div>
@@ -491,7 +507,7 @@ function Results({
             />
           </label>
         </div>
-        <div className="content-center px-2 sm:px-8 py-4 bg-white border rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <div className="content-center px-2 sm:px-8 py-4 rounded-lg shadow-md ">
           <div className="flow-root">
             {follows.length === 0 ? (
               <p className="text-gray-700 dark:text-gray-200">
