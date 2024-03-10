@@ -198,12 +198,13 @@ export function Content({}) {
     0, 0,
   ])
   const [errors, setErrors] = useState<Array<string>>([])
+  let myHandle = '';
 
   useEffect(()=>{
     if (typeof window != "undefined") {
       const queryParams = new URLSearchParams(window.location.search)
-      const handle = queryParams.get("handle")
-      search(handle);
+      myHandle = queryParams.get("handle")
+      search(myHandle);
     }
   }, [])
 
@@ -235,7 +236,7 @@ export function Content({}) {
           }}
         >
           <div className="form-group mb-6 text-4xl lg:ml-16">
-            <label
+            {/* <label
               htmlFor="mastodonHandle"
               className="form-label inline-block mb-2 text-gray-700 dark:text-gray-200"
             >
@@ -264,16 +265,16 @@ export function Content({}) {
         "
               id="mastodonHandle"
               aria-describedby="mastodonHandleHelp"
-              placeholder="johnmastodon@mas.to"
-            />
-            <small
+              placeholder={myHandle}
+            /> */}
+            {/* <small
               id="mastodonHandleHelp"
               className="block mt-1 text-xs text-gray-600 dark:text-gray-300"
             >
               Be sure to include the full handle, including the domain.
-            </small>
+            </small> */}
 
-            <button
+            {/* <button
               type="submit"
               className="
       px-6
@@ -293,12 +294,12 @@ export function Content({}) {
       duration-150
       ease-in-out"
             >
-              Search
-              <Spinner
+              Search */}
+              {/* <Spinner
                 visible={isLoading}
                 className="w-4 h-4 ml-2 fill-white"
               />
-            </button>
+            </button> */}
 
             {isLoading ? (
               <p className="text-sm dark:text-gray-400">
